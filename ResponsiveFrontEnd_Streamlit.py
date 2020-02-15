@@ -34,7 +34,7 @@ st.write(parameter_dict)
 
 import requests 
 import json
-URL = 'https://mhemani-diabetes-streamlit.herokuapp.com/api_diabetes'
+URL = 'http://c839de98.ngrok.io/api_diabetes'
 
 st.write('\n','\n')
 
