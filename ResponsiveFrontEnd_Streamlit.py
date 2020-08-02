@@ -34,18 +34,21 @@ st.write(parameter_dict)
 
 import requests 
 import json
-URL = 'http://c839de98.ngrok.io/api_diabetes'
+
+URL = 'https://mhemani-diabetes-fastapi.herokuapp.com/api_diabetes/'
 
 st.write('\n','\n')
 
 if st.button("Click Here to Predict"):
 
 	PARAMS={'data':','.join(map(str,list(parameter_dict.values())))}
-	#st.write(PARAMS)
 	
-	#PARAMS = {'data':'1,121,78,39,74,39.0,0.261,28'} 
-	headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
-	r = requests.post(url = URL, json=PARAMS, headers=headers) 
+	ENCODE_PARAMS=urllib.parse.urlencode({'payload':PARAMS})
+	
+	r = requests.get(url = URL, params=ENCODE_PARAMS) 
+	
+	print(r.url)
+	#st.write(PARAMS)
 	
 	st.write('\n','\n')
 	prediction_value=r.json().get('prediction')
@@ -53,13 +56,5 @@ if st.button("Click Here to Predict"):
 	prediction='Positive' if float(prediction_value) >0.4 else 'Negative'
 	
 	st.write('Your Diabetes Prediction is:**',prediction,' **with **',prediction_proba,'** confidence')
-
-
-
-
-
-# In[ ]:
-
-
-
-
+	
+	st.write("Click Here to show API Docs",'https://mhemani-diabetes-fastapi.herokuapp.com/api_diabetes/')
