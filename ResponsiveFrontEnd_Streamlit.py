@@ -7,6 +7,7 @@
 import streamlit as st
 import pandas as pd
 import urllib.parse
+from ratelimit import limits
 
 
 # In[6]:
@@ -29,9 +30,6 @@ st.write('\n','\n')
 st.title('Your Input Summary')
 
 st.write(parameter_dict)
-#pd.DataFrame.from_dict(parameter_dict)
-#st.write(pd.DataFrame.from_records([parameter_dict]))
-# In[8]:
 
 import requests 
 import json
@@ -40,13 +38,24 @@ URL = 'https://mhemani-diabetes-fastapi.herokuapp.com/api_diabetes/'
 
 st.write('\n','\n')
 
+SECONDS = 60
+
+@limits(calls=5, period=SECONDS)
+def call_predict_api(PARAMETERS):
+	
+	ENCODE_PARAMS=urllib.parse.urlencode({'payload':PARAMETERS.get('data')})
+	
+	response=requests.get(url = URL, params=ENCODE_PARAMS) 
+	
+	if response.status_code != 200:
+        	raise Exception('API response: {}'.format(response.status_code))
+    	return response
+	
 if st.button("Click Here to Predict"):
 
 	PARAMS={'data':','.join(map(str,list(parameter_dict.values())))}
 	
-	ENCODE_PARAMS=urllib.parse.urlencode({'payload':PARAMS.get('data')})
-	
-	r = requests.get(url = URL, params=ENCODE_PARAMS) 
+	r=call_predict_api(PARAMS)
 	
 	st.write(r.url)
 	
@@ -57,4 +66,4 @@ if st.button("Click Here to Predict"):
 	
 	st.write('Your Diabetes Prediction is:**',prediction,' **with **',prediction_proba,'** confidence')
 	
-	st.write("Click Here to show API Docs",'https://mhemani-diabetes-fastapi.herokuapp.com/api_diabetes/docs')
+	st.write("Click Here to show API Docs",'https://mhemani-diabetes-fastapi.herokuapp.com/docs')
