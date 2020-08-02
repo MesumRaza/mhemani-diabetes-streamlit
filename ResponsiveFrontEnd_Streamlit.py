@@ -48,13 +48,12 @@ if st.button("Click Here to Predict"):
 	
 	r = requests.get(url = URL, params=ENCODE_PARAMS) 
 	
-	print(r.url)
-	#st.write(PARAMS)
+	st.write(r.url)
 	
 	st.write('\n','\n')
 	prediction_value=r.json().get('prediction')
-	prediction_proba=str(round(float(r.json().get('prediction_proba')),1)*100)+'%'
-	prediction='Positive' if float(prediction_value) >0.4 else 'Negative'
+	prediction_proba=str(round(r.json().get('prediction_proba'),1)*100)+'%'
+	prediction='Positive' if prediction_value >0.4 else 'Negative'
 	
 	st.write('Your Diabetes Prediction is:**',prediction,' **with **',prediction_proba,'** confidence')
 	
