@@ -49,7 +49,7 @@ def call_predict_api(PARAMETERS):
 	
 	if response.status_code != 200:
         	raise Exception('API response: {}'.format(response.status_code))
-    	return response
+	return response
 	
 if st.button("Click Here to Predict"):
 
