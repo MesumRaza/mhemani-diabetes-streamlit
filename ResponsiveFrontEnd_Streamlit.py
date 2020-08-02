@@ -6,6 +6,7 @@
 
 import streamlit as st
 import pandas as pd
+import urllib.parse
 
 
 # In[6]:
