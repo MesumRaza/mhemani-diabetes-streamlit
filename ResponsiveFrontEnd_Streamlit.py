@@ -44,7 +44,7 @@ if st.button("Click Here to Predict"):
 
 	PARAMS={'data':','.join(map(str,list(parameter_dict.values())))}
 	
-	ENCODE_PARAMS=urllib.parse.urlencode({'payload':PARAMS.get('data)})
+	ENCODE_PARAMS=urllib.parse.urlencode({'payload':PARAMS.get('data')})
 	
 	r = requests.get(url = URL, params=ENCODE_PARAMS) 
 	
