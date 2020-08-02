@@ -57,4 +57,4 @@ if st.button("Click Here to Predict"):
 	
 	st.write('Your Diabetes Prediction is:**',prediction,' **with **',prediction_proba,'** confidence')
 	
-	st.write("Click Here to show API Docs",'https://mhemani-diabetes-fastapi.herokuapp.com/api_diabetes/')
+	st.write("Click Here to show API Docs",'https://mhemani-diabetes-fastapi.herokuapp.com/api_diabetes/docs')
