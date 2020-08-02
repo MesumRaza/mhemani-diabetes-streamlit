@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
-
 
 import streamlit as st
 import pandas as pd
 import urllib.parse
-from ratelimit import limits
 
 
-# In[6]:
+
 parameter_list=['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin','BMI','DiabetesPedigreeFunction','Age']
 parameter_input_values=[]
 parameter_description=['Number of times pregnant','Plasma glucose concentration over 2 hours in an oral glucose tolerance test','Diastolic blood pressure (mm Hg)','Triceps skin fold thickness (mm)','2-Hour serum insulin (mu U/ml)','Body mass index (weight in kg/(height in m)2)','Diabetes pedigree function (a function which scores likelihood of diabetes based on family history)','Age (years)']
@@ -21,8 +18,6 @@ for parameter,parameter_df,parameter_desc in zip(parameter_list,parameter_defaul
 	st.subheader('Input value for '+parameter)
 	parameter_input_values.append(st.number_input(parameter_desc,key=parameter,value=float(parameter_df)))
 	
-#st.write(parameter_val) for parameter_val in parameter_values
-#parameter_values=[st.text_input('Age') for parameter in parameter_list]
 	
 parameter_dict=dict(zip(parameter_list, parameter_input_values)) 
 
@@ -38,9 +33,6 @@ URL = 'https://mhemani-diabetes-fastapi.herokuapp.com/api_diabetes/'
 
 st.write('\n','\n')
 
-SECONDS = 60
-
-@limits(calls=5, period=SECONDS)
 def call_predict_api(PARAMETERS):
 	
 	ENCODE_PARAMS=urllib.parse.urlencode({'payload':PARAMETERS.get('data')})
